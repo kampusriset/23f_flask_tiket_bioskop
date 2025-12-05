@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- ===================== -->
+<!-- MUAT STATUS LOGIN -->
+<!-- ===================== -->
+<script>
+  const isLoggedIn = "{{ 'true' if session.get('user_id') else 'false' }}";
+</script>
+
+<div class="row">
+  <div class="col-md-4">
+    <img src="{{ film.poster }}" class="img-fluid rounded shadow">
+  </div>
+
+  <div class="col-md-8">
+    <h2>{{ film.title }}</h2>
+
+    <!-- ===================== -->
+    <!-- DETAIL FILM -->
+    <!-- ===================== -->
+    <div class="mt-3 p-3 bg-dark text-white rounded" style="line-height:1.7;">
+      <h5 class="mb-3">Detail Film</h5>
+
+      <div><strong>Genre:</strong> {{ film.genre or 'Tidak diketahui' }}</div>
+      <div><strong>Rating Usia:</strong> {{ film.age_rating or 'SU' }}</div>
+      <div><strong>Durasi:</strong> {{ film.duration }} menit</div>
+      <div><strong>Sutradara:</strong> {{ film.director or '-' }}</div>
+      <div><strong>Pemeran:</strong> {{ film.cast or '-' }}</div>
+      <div><strong>Produksi:</strong> {{ film.production or '-' }}</div>
+      <div><strong>Bahasa:</strong> {{ film.language or '-' }}</div>
+    </div>
+
+    <!-- SINOPSIS -->
+    <p class="mt-3">{{ film.description }}</p>
+
+    <!-- PILIH TANGGAL -->
+    <h4 class="mt-4">Pilih Tanggal</h4>
+    <div id="tanggal-wrapper" class="d-flex gap-2 flex-wrap mb-3">
+      {% for d in dates %}
+      <button
+        class="btn btn-dark px-3 py-2 pilih-tanggal"
+        data-date="{{ d.date }}">`
+        {{ d.date }}
+      </button>
+      {% endfor %}
+    </div>
+
+    <!-- JADWAL TERSEDIA -->
+    <h4 class="mt-3">Jadwal Tersedia</h4>
+    <ul id="jadwal-list" class="list-group"></ul>
+
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- JAVASCRIPT FILTER AJAX -->
+<!-- ===================== -->
+<script>
+  const jadwalList = document.getElementById("jadwal-list");
+
+  document.querySelectorAll(".pilih-tanggal").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tanggal = btn.dataset.date;
+      const filmId = "{{ film.id }}";
+
+      jadwalList.innerHTML = "<li class='list-group-item'>Loading...</li>";
+
+      fetch(`/film/${filmId}/schedule?date=` + tanggal)
+        .then(res => res.json())
+        .then(data => {
+          jadwalList.innerHTML = "";
+
+          if (data.length === 0) {
+            jadwalList.innerHTML = "<li class='list-group-item'>Tidak ada jadwal.</li>";
+            return;
+          }
+
+          data.forEach(s => {
+            let tombol = "";
+
+            if (isLoggedIn === "true") {
+              tombol = `
+                <a href="/choose_seat/${s.id}" class="btn btn-sm btn-accent mt-1">
+                  Pilih Kursi
+                </a>
+              `;
+            } else {
+              tombol = `
+                <a href="/login" class="btn btn-warning btn-sm mt-1">
+                  Login untuk melanjutkan
+                </a>
+              `;
+            }
+
+            jadwalList.innerHTML += `
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="px-2 py-1 d-inline-block border rounded fw-bold">
+                    ${s.time}
+                  </div>
+                </div>
+                <div class="text-end">
+                  <div class="fw-bold">Rp ${s.price}</div>
+                  ${tombol}
+                </div>
+              </li>
+            `;
+          });
+        });
+    });
+  });
+</script>
+
+{% endblock %}

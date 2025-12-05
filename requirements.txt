@@ -1,0 +1,106 @@
+B. Skenario Video Demo (maks. 2 menit)
+
+Aku buatkan urutan demo yang bisa kamu rekam (pakai OBS, Bandicam, atau screen recorder HP/laptop):
+
+🎥 Urutan Video Demo (Saran isi video)
+
+Mulai dari Halaman Login
+
+Tunjukkan URL: frontend/index.html
+
+Login sebagai mahasiswa (misal: mahasiswa1@kampus.ac.id)
+
+Dashboard → Masuk ke Kelas
+
+Tunjukkan daftar kelas.
+
+Klik salah satu kelas (misal: “E-Learning”).
+
+Tab “Tugas & Materi” → Kumpulkan Tugas
+
+Scroll ke blok “Kumpulkan Tugas Anda”.
+
+Isi link tugas (misal link Google Drive) + catatan singkat.
+
+Klik tombol “Kumpulkan”.
+
+Tunjukkan notifikasi “Tugas berhasil dikumpulkan”.
+
+Scroll ke bawah ke “Pengumpulan Saya” → tunjukkan bahwa data baru muncul.
+
+Buka phpMyAdmin (opsional tapi bagus untuk nilai)
+
+Tampilkan tabel submissions.
+
+Refresh tabel → tunjukkan baris baru yang barusan dikirim dari web.
+
+Tab “Absensi” → Klik “Saya Hadir”
+
+Pergi ke tab Absensi.
+
+Klik tombol “Saya Hadir”.
+
+Tampilkan tabel “Riwayat Kehadiran Saya” yang bertambah 1 baris.
+
+Tunjukkan lagi di phpMyAdmin tabel attendance (opsional).
+
+Login sebagai Dosen (opsional tapi keren)
+
+Login dengan email berisi kata dosen (misal dosen1@kampus.ac.id).
+
+Masuk kelas yang sama →
+
+Tab Tugas & Materi → blok Pengumpulan Mahasiswa → lihat data pengumpulan tadi.
+
+Tab Absensi → blok Rekap Kehadiran Mahasiswa → lihat data absensi tadi.
+
+Itu sudah sangat cukup untuk video 1–2 menit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Opening]
+“Assalamualaikum warahmatullahi wabarakatuh.
+Pada video ini saya akan mendemonstrasikan integrasi antara frontend dan backend pada sistem E-Learning yang sudah kami buat.”
+
+[Masuk ke Login]
+“Pertama, ini adalah halaman login. Ketika saya memasukkan email dan password, frontend akan mengirimkan data ke backend menggunakan API POST /api/login. Backend akan memverifikasi dan mengembalikan data user, lalu pengguna diarahkan ke dashboard.”
+
+[Dashboard → Masuk Kelas]
+“Setelah berhasil login, ini adalah halaman dashboard yang menampilkan daftar kelas. Data kelas ini diambil langsung melalui API GET /api/classes. Selanjutnya saya masuk ke salah satu kelas.”
+
+[Pengumpulan Tugas – Input disimpan ke DB]
+“Di halaman kelas terdapat menu Tugas dan Materi. Di bagian ini saya akan melakukan pengumpulan tugas.
+Saya memasukkan link tugas, lalu menekan tombol ‘Kumpulkan’.
+
+Pada tahap ini, frontend mengirimkan data menggunakan API POST ke endpoint
+/api/classes/:id/submissions. Backend menerima request tersebut dan menyimpan data ke tabel ‘submissions’ di database MySQL.”
+
+[Tampilkan hasilnya – Data tampil realtime]
+“Kemudian saya scroll ke bawah pada bagian ‘Pengumpulan Saya’.
+Data pengumpulan yang barusan saya kirim sudah tampil di sini.
+Data ini ditampilkan secara realtime dari database melalui API GET /api/classes/:id/submissions?email=....”
+
+[Absensi – Input tersimpan ke DB]
+“Selanjutnya saya akan menunjukkan fitur absensi. Ketika saya klik tombol ‘Saya Hadir’, frontend mengirim data ke backend melalui API POST /api/classes/:id/attendance. Backend kemudian menyimpan catatan kehadiran ke tabel ‘attendance’.”
+
+[Tampilkan rekap absensi – Data realtime]
+“Setelah itu, data hadir langsung muncul di tabel ‘Riwayat Kehadiran Saya’. Data ini diambil dari database menggunakan API GET /api/classes/:id/attendance?email=....”
+
+[Opsional – Tampilkan phpMyAdmin]
+“Sebagai bukti penyimpanan data di database, di sini saya buka phpMyAdmin.
+Kita bisa lihat bahwa tabel ‘submissions’ dan tabel ‘attendance’ sudah terisi sesuai aksi yang dilakukan dari web.”
+
+[Closing]
+“Dengan demikian, integrasi frontend dan backend berjalan dengan baik. Data yang diinput melalui halaman web berhasil disimpan ke database, dan data yang tersimpan dapat ditampilkan kembali secara realtime di halaman frontend.
+
+Terima kasih. Wassalamualaikum warahmatullahi wabarakatuh.”

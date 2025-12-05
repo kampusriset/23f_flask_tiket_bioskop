@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage Films</h2>
+<form method="post" class="mb-4">
+  <div class="mb-2"><input name="title" class="form-control" placeholder="Title"></div>
+  <div class="mb-2"><input name="duration" class="form-control" placeholder="Duration (min)"></div>
+  <div class="mb-2"><textarea name="description" class="form-control" placeholder="Description"></textarea></div>
+  <button class="btn btn-accent">Tambah Film</button>
+</form>
+<h4>Existing</h4>
+<ul class="list-group">
+{% for f in films %}<li class="list-group-item bg-dark">{{f.title}}</li>{% endfor %}
+</ul>
+{% endblock %}

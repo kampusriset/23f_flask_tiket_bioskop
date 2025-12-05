@@ -1,0 +1,9 @@
+body{background:#070707;color:#fff}
+.navbar-brand{font-weight:700;color:#fff}
+.card-film{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.4));border:0}
+.btn-accent{background:#d71920;border:none;color:#fff}
+.seat{width:36px;height:36px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;margin:4px;cursor:pointer}
+.seat.available{background:#2b2b2b}
+.seat.selected{background:#d71920}
+.seat.reserved{background:#666;cursor:not-allowed}
+
