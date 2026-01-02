@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}Pembayaran Berhasil{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+
+    <div class="p-4 p-md-5 rounded-4 text-center"
+         style="background: linear-gradient(120deg, rgba(46, 204, 113, .12), rgba(255,255,255,.04));
+                border: 1px solid rgba(255,255,255,.10);
+                box-shadow: 0 10px 30px rgba(0,0,0,.35);">
+
+      <!-- Animated check -->
+      <div class="success-wrap mx-auto mb-3">
+        <div class="success-ring"></div>
+        <div class="success-check">✓</div>
+      </div>
+
+      <div class="text-uppercase small" style="letter-spacing:.18em; opacity:.75;">
+        Payment Success
+      </div>
+
+      <h1 class="mt-2 mb-2 fw-bold">Pembayaran Berhasil</h1>
+      <p class="text-muted mb-0">
+        Terima kasih! Booking kamu sudah tersimpan.
+      </p>
+
+      <hr class="my-4" style="border-color: rgba(255,255,255,.12);">
+
+      <!-- Summary Card -->
+      <div class="text-start p-3 p-md-4 rounded-4"
+           style="background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.10);">
+        <div class="d-flex justify-content-between flex-wrap gap-2">
+          <div>
+            <div class="text-muted small">Film</div>
+            <div class="fw-bold">{{ film.title }}</div>
+            <div class="text-muted mt-1">
+              {{ schedule.show_time.strftime('%d %b %Y %H:%M') }}
+              {% if film.duration %} • {{ film.duration }} min{% endif %}
+              {% if film.genre %} • {{ film.genre }}{% endif %}
+            </div>
+          </div>
+
+          <div class="text-end">
+            <div class="text-muted small">Booking ID</div>
+            <div class="fw-bold">#{{ booking.id }}</div>
+            <div class="mt-2">
+              <span class="badge rounded-pill text-bg-dark"
+                    style="border:1px solid rgba(255,255,255,.18); padding:.5rem .8rem;">
+                Status: {{ booking.status }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-3" style="border-color: rgba(255,255,255,.12);">
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="text-muted small">Kursi</div>
+            <div class="fw-semibold">{{ booking.seats }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-muted small">Total</div>
+            <div class="fw-bold fs-5">
+              Rp{{ "{:,}".format(booking.total).replace(",", ".") }}
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="text-muted small">Metode</div>
+            <div class="fw-semibold">{{ booking.payment_method or "-" }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-muted small">Tanggal Bayar</div>
+            <div class="fw-semibold">
+              {% if booking.paid_at %}{{ booking.paid_at.strftime('%Y-%m-%d') }}{% else %}-{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+        <a class="btn btn-accent"
+           href="{{ url_for('public.choose_seat', schedule_id=schedule.id) }}?repeat={{ booking.id }}">
+          Repeat Order
+        </a>
+
+        <a class="btn btn-outline-light" href="{{ url_for('public.my_bookings') }}">
+          My Bookings
+        </a>
+
+        <a class="btn btn-outline-light" href="{{ url_for('public.home') }}">
+          Back Home
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+/* simple success animation (no external libs) */
+.success-wrap{
+  width: 84px;
+  height: 84px;
+  position: relative;
+}
+.success-ring{
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 2px solid rgba(46,204,113,.35);
+  box-shadow: 0 0 0 10px rgba(46,204,113,.08);
+  animation: popIn .55s ease-out both;
+}
+.success-check{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+  font-weight: 900;
+  color: rgba(46,204,113,.95);
+  transform: scale(.7);
+  opacity: 0;
+  animation: checkIn .45s ease-out .18s both;
+}
+
+@keyframes popIn{
+  from { transform: scale(.85); opacity: .2; }
+  to   { transform: scale(1); opacity: 1; }
+}
+@keyframes checkIn{
+  from { transform: scale(.6) rotate(-8deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+</style>
+
+{% endblock %}

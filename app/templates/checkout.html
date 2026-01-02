@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+  <!-- LEFT: Summary -->
+  <div class="col-lg-7">
+    <div class="p-4 rounded-4 checkout-card"
+         style="background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.10); box-shadow: 0 10px 30px rgba(0,0,0,.35);">
+      <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+        <div>
+          <div class="text-uppercase small" style="letter-spacing:.16em; opacity:.75;">Checkout</div>
+          <h2 class="mb-1 fw-bold">{{ film.title }}</h2>
+          <div class="text-muted">
+            {{ schedule.show_time.strftime('%d %b %Y %H:%M') }}
+            {% if film.duration %} • {{ film.duration }} min{% endif %}
+            {% if film.genre %} • {{ film.genre }}{% endif %}
+          </div>
+        </div>
+
+        <span class="badge rounded-pill text-bg-dark"
+              style="border:1px solid rgba(255,255,255,.18); padding:.5rem .8rem;">
+          Status: {{ booking.status }}
+        </span>
+      </div>
+
+      <hr class="my-4" style="border-color: rgba(255,255,255,.12);">
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="text-muted">Booking ID</div>
+          <div class="fw-semibold">#{{ booking.id }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="text-muted">Kursi</div>
+          <div class="fw-semibold">{{ booking.seats }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="text-muted">Harga / Kursi</div>
+          <div class="fw-semibold">
+            Rp{{ "{:,}".format(schedule.price).replace(",", ".") }}
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="text-muted">Total</div>
+          <div class="fw-bold fs-5">
+            Rp{{ "{:,}".format(booking.total).replace(",", ".") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex gap-2 flex-wrap">
+        <a href="{{ url_for('public.choose_seat', schedule_id=schedule.id) }}"
+           class="btn btn-outline-light">
+          Ubah Kursi
+        </a>
+
+        <a href="{{ url_for('public.my_bookings') }}"
+           class="btn btn-outline-light">
+          Lihat Riwayat
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Payment Form -->
+  <div class="col-lg-5">
+    <div class="p-4 rounded-4"
+         style="background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.10); box-shadow: 0 10px 30px rgba(0,0,0,.35); position: sticky; top: 84px;">
+      <h5 class="mb-3">Pembayaran</h5>
+      <div class="text-muted small mb-3">
+        Isi metode & tanggal pembayaran. Kalau belum bayar, boleh kosong (status tetap PENDING).
+      </div>
+
+      <form method="POST" class="d-grid gap-3">
+        <div>
+          <label class="form-label">Metode Pembayaran</label>
+          <select class="form-select" name="payment_method">
+            <option value="" {% if not booking.payment_method %}selected{% endif %}>Belum bayar</option>
+            <option value="CASH" {% if booking.payment_method == "CASH" %}selected{% endif %}>CASH</option>
+            <option value="QRIS" {% if booking.payment_method == "QRIS" %}selected{% endif %}>QRIS</option>
+            <option value="TRANSFER" {% if booking.payment_method == "TRANSFER" %}selected{% endif %}>TRANSFER</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label">Tanggal Pembayaran</label>
+          <input class="form-control" type="date" name="paid_at"
+                 value="{% if booking.paid_at %}{{ booking.paid_at.strftime('%Y-%m-%d') }}{% endif %}">
+        </div>
+
+        <button class="btn btn-accent" type="submit">Konfirmasi</button>
+      </form>
+
+      <div class="text-muted small mt-3">
+        Tips: setelah pembayaran diisi, status akan menjadi <b>PAID</b>.
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

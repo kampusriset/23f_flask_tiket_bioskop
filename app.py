@@ -188,7 +188,7 @@ def choose_seat(schedule_id):
     # Ambil data kursi yang sudah dibooking
     booked = db.execute("""
         SELECT seats FROM bookings
-        WHERE schedule_id=? AND status!='canceled'
+        WHERE schedule_id=? AND status!='canceled'  
     """, (schedule_id,)).fetchall()
 
     booked_seats = []
