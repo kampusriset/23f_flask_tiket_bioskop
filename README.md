@@ -1,76 +1,71 @@
-# Flask CGV - Tiket Bioskop
+# Aplikasi Tiket Bioskop – Flask  
+Tugas UAS Pemrograman Web
 
-Aplikasi web **Flask CGV** untuk pemesanan tiket bioskop, menampilkan jadwal film, serta mengelola database film dan penonton.
+## Deskripsi
+Aplikasi web berbasis **Flask** untuk pemesanan tiket bioskop.  
+Fitur utama:
+- Login & register user
+- Melihat daftar film dan detail film
+- Pemilihan jadwal & kursi
+- Pemesanan tiket
+- Download **tiket dalam bentuk PDF**
+- Dashboard admin (kelola film, jadwal, dan booking)
 
-## Fitur
+---
 
-- **Lihat jadwal film**: Menampilkan daftar film dan jam tayang.
-- **Pemesanan tiket**: Pilih film, jam tayang, dan lakukan reservasi.
-- **Database film & penonton**: CRUD sederhana menggunakan SQLite.
-- **Script otomatis**:
-  - `generate_schedules.py`: Menghasilkan jadwal film otomatis.
-  - `populate_film_details.py`: Mengisi database film awal.
-  - `update_films.py` & `update_db.py`: Mengupdate data film dan jadwal.
-  - `init_db.py`: Inisialisasi database.
-- **Environment virtual**: Menggunakan `venv` untuk dependency isolation.
-- **Frontend sederhana**: Menggunakan folder `templates` dan `static`.
+## Teknologi
+- Python 3.10+
+- Flask
+- Flask-SQLAlchemy
+- Flask-Migrate
+- SQLite
+- xhtml2pdf (export tiket PDF)
 
-## Struktur Folder
+---
+Akun Demo:
+Admin (Dosen)
+- Username: dosen
+- Password: 123456
 
-flask_cgv/
-│
-├─ app.py # Main Flask application
-├─ requirements.txt # Dependencies
-├─ init_db.py # Script inisialisasi database
-├─ generate_schedules.py # Generate jadwal film otomatis
-├─ populate_film_details.py
-├─ update_db.py
-├─ update_films.py
-├─ instance/ # Database dan konfigurasi lokal
-├─ static/ # File statis (CSS, JS, images)
-├─ templates/ # Template HTML
-└─ venv/ # Virtual environment
+User (Mahasiswa)
+- Username: mahasiswa
+- Password: 123456
+  
 
-## Instalasi
+## Cara Instalasi
 
-1. Clone repo:
-   ```bash
-   git clone https://github.com/kampusriset/23f_flask_tiket_bioskop.git
-   cd flask_cgv
-Buat virtual environment dan aktifkan:
+### 1. Clone Repository
+```bash
+git clone https://github.com/kampusriset/23f_flask_tiket_bioskop.git
+cd 23f_flask_tiket_bioskop
 
-bash
-Salin kode
+###2. Buat Virtual Environment (opsional tapi disarankan)
 python -m venv venv
-# Windows
-venv\Scripts\activate
-# Mac/Linux
-source venv/bin/activate
-Install dependency:
 
-bash
-Salin kode
-pip install -r requirements.txt
-Inisialisasi database:
 
-bash
-Salin kode
-python init_db.py
-python populate_film_details.py
-python generate_schedules.py
-Jalankan aplikasi:
+Aktifkan:
+  Windows: venv\Scripts\activate
+  Linux / Mac: source venv/bin/activate
 
-bash
-Salin kode
-python app.py
-Buka browser dan akses: http://127.0.0.1:5000/
+###3. Install Dependency
+  pip install -r requirements.txt
 
-Catatan
-Folder instance berisi database lokal (.db).
+###4. Inisialisasi Database
+  python init_db.py
 
-Pastikan environment virtual aktif saat menjalankan script.
 
-Proyek ini masih menggunakan SQLite untuk database, cocok untuk testing dan development.
+#Jika menggunakan migration:
+  flask db upgrade
 
-Lisensi
-MIT License © 2025
+###5. Jalankan Aplikasi
+  python run.py
+
+
+Akses di browser:
+  http://127.0.0.1:5000
+
+Fitur Download Tiket PDF
+Aplikasi mendukung export tiket ke PDF menggunakan library:
+  xhtml2pdf
+
+Library ini sudah termasuk di requirements.txt.
