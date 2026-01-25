@@ -2,6 +2,31 @@ from datetime import datetime
 from app.extensions import db
 from app.models import Film, Schedule
 from sqlalchemy.exc import OperationalError
+from app.models import Film, Schedule, User
+
+def seed_data():
+    try:
+        if User.query.first():
+            return
+    except OperationalError:
+        return
+
+    # ===== SEED ADMIN / DOSEN =====
+    admin = User(
+        username="dosen",
+        password_hash="123456",  #AKUN ADMIN
+        is_admin=True
+    )
+
+    mahasiswa = User(
+        username="mahasiswa",   #AKUN USER
+        password_hash="123456",
+        is_admin=False
+    )
+
+    db.session.add_all([admin, mahasiswa])
+    db.session.commit()
+
 
 def seed_data():
     try:
