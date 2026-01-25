@@ -1,0 +1,14 @@
+<h2>Tambah Jadwal Film</h2>
+
+<form method="post">
+  <select name="film_id">
+    {% for f in films %}
+      <option value="{{ f.id }}">{{ f.title }}</option>
+    {% endfor %}
+  </select><br>
+
+  <input type="datetime-local" name="show_time" required><br>
+  <input name="price" placeholder="Harga tiket"><br>
+
+  <button type="submit">Simpan</button>
+</form>

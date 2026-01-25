@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Laporan History Booking</h2>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Film</th>
+            <th>Jadwal</th>
+            <th>Kursi</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Tanggal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in reports %}
+        <tr>
+            <td>{{ r.username }}</td>
+            <td>{{ r.film_title }}</td>
+            <td>{{ r.show_time }}</td>
+            <td>{{ r.seats }}</td>
+            <td>Rp {{ r.total }}</td>
+            <td>{{ r.status }}</td>
+            <td>{{ r.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

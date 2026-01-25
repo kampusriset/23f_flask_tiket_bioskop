@@ -1,0 +1,13 @@
+<h2>Edit Film</h2>
+
+<form method="post">
+  <input type="text" name="title" value="{{ film.title }}">
+  <input name="title" placeholder="Judul film" required><br>
+  <input name="genre" placeholder="Genre"><br>
+  <input name="duration" placeholder="Durasi (menit)"><br>
+  <input name="poster" placeholder="URL Poster"><br>
+  <textarea name="description">{{ film.description }}</textarea>
+  <button type="submit">Simpan</button>
+</form>
+
+

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Kelola Jadwal</h2>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Film</th>
+      <th>Waktu Tayang</th>
+      <th>Harga</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in schedules %}
+    <tr>
+      <td>{{ s.title }}</td>
+      <td>{{ s.show_time }}</td>
+      <td>Rp {{ s.price }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

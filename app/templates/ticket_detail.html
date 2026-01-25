@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Tiket #{{ booking.id }}{% endblock %}
+
+{% block content %}
+<div class="card bg-dark text-light">
+  <div class="card-body">
+    <h4 class="mb-3">🎟 Tiket Bioskop</h4>
+
+    <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
+    <p><strong>Film:</strong> {{ booking.schedule.film.title }}</p>
+    <p><strong>Jadwal:</strong>
+      {{ booking.schedule.show_time.strftime('%d %b %Y %H:%M') }}
+    </p>
+    <p><strong>Kursi:</strong> {{ booking.seats }}</p>
+    <p><strong>Status:</strong>
+      <span class="badge bg-success">PAID</span>
+    </p>
+
+    <hr>
+
+    <p class="text-muted mb-0">
+      Tunjukkan tiket ini saat masuk studio 🎬
+    </p>
+  </div>
+</div>
+{% endblock %}
