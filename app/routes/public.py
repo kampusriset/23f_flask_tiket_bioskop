@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from datetime import datetime
 from app.extensions import db
 from app.models import Film, Schedule, Booking, User
