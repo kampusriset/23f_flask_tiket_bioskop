@@ -68,13 +68,8 @@ exit()
 ```
 ---
 
-### 5. Jika menggunakan migration:
-```bash
-flask db upgrade
-```
----
 
-### 6. Jalankan Aplikasi
+### 5. Jalankan Aplikasi
 ```bash
 flask run
 ```
