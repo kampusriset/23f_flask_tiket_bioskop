@@ -75,6 +75,13 @@ flask run
 ```
 ---
 
+### Login Akun :
+```bash
+(User): wajib registrasi 
+(Admin): 
+username: admin
+password: admin123 (sudah seed otomatis)
+```
 
 Akses di browser:
 ```bash
