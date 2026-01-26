@@ -6,32 +6,38 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 bp = Blueprint("auth", __name__)
 
-@bp.route("/login", methods=["GET", "POST"])
-def login():
+@bp.route("/register", methods=["GET", "POST"])
+def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
 
-        user = User.query.filter_by(username=username).first()
+        if not username or not password:
+            flash("Username dan password wajib diisi.", "warning")
+            return redirect(url_for("auth.register"))
 
-        if not user or not check_password_hash(user.password_hash, password):
-            flash("Username / password salah", "danger")
-            return redirect(url_for("auth.login"))
+        exists = User.query.filter_by(username=username).first()
+        if exists:
+            flash("Username sudah dipakai.", "danger")
+            return redirect(url_for("auth.register"))
 
-        # SET SESSION
-        session["user_id"] = user.id
-        session["username"] = user.username
-        session["is_admin"] = user.is_admin
+        hashed_password = generate_password_hash(password)
 
-        flash("Login berhasil", "success")
+        user = User(
+            username=username,
+            password_hash=hashed_password,
+            is_admin=False
+        )
 
-        # 🔥 INI KUNCINYA
-        if user.is_admin:
-            return redirect(url_for("admin.dashboard"))
+        from app.extensions import db
+        db.session.add(user)
+        db.session.commit()
 
-        return redirect(url_for("public.home"))
+        flash("Register berhasil. Silakan login.", "success")
+        return redirect(url_for("auth.login"))
 
-    return render_template("login.html")
+    return render_template("register.html")
+
 
 
 
