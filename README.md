@@ -38,31 +38,54 @@ User (wajib register)
 ```bash
 git clone https://github.com/kampusriset/23f_flask_tiket_bioskop.git
 cd 23f_flask_tiket_bioskop
+```
+---
 
-###2. Buat Virtual Environment (opsional tapi disarankan)
+### 2. Buat Virtual Environment (opsional tapi disarankan)
+```bash
 python -m venv venv
 
 
-Aktifkan:
-  Windows: venv\Scripts\activate
-  Linux / Mac: source venv/bin/activate
+Windows    : venv\Scripts\activate
+Linux / Mac: source venv/bin/activate
+```
+---
 
-###3. Install Dependency
-  pip install -r requirements.txt
+### 3. Install Dependency
+```bash
+pip install -r requirements.txt
+```
+---
 
-###4. Inisialisasi Database
-  python init_db.py
+### 4. Inisialisasi Database
+```bash
+flask shell
 
 
-#Jika menggunakan migration:
-  flask db upgrade
+from app.extensions import db
+db.create_all()
+exit()
+```
+---
 
-###5. Jalankan Aplikasi
-  python run.py
+### 5. Jika menggunakan migration:
+```bash
+flask db upgrade
+```
+---
+
+### 6. Jalankan Aplikasi
+```bash
+flask run
+```
+---
 
 
 Akses di browser:
-  http://127.0.0.1:5000
+```bash
+http://127.0.0.1:5000
+```
+---
 
 Fitur Download Tiket PDF
 Aplikasi mendukung export tiket ke PDF menggunakan library:
