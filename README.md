@@ -22,7 +22,7 @@ Fitur utama:
 - xhtml2pdf (export tiket PDF)
 
 ---
-Akun :
+## Akun 
 Admin : (bisa tanpa register sudah ke seed otomatis)
 - Username: admin
 - Password: admin123
