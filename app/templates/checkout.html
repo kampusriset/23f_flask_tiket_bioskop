@@ -93,7 +93,16 @@
                  value="{% if booking.paid_at %}{{ booking.paid_at.strftime('%Y-%m-%d') }}{% endif %}">
         </div>
 
-        <button class="btn btn-accent" type="submit">Konfirmasi</button>
+        {% if session.get("is_admin") %}
+          <button class="btn btn-secondary w-100" type="button" disabled>
+            Admin tidak dapat melakukan checkout
+          </button>
+          {% else %}
+          <button class="btn btn-accent w-100" type="submit">
+            Konfirmasi
+          </button>
+          {% endif %}
+
       </form>
 
       <div class="text-muted small mt-3">
