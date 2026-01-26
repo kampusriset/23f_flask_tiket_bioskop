@@ -17,9 +17,9 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(admin_bp)
 
-        # 🔹 JALANKAN SEED DI SINI
-    from app.seed import run_seed
+    # 🔹 AUTO SEED 
     with app.app_context():
-        run_seed()
+        from app.seed import seed_data
+        seed_data()
 
     return app
