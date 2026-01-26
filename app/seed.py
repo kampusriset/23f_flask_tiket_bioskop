@@ -6,69 +6,56 @@ from app.extensions import db
 from app.models import Film, Schedule, User
 
 
-def seed_admin():
+def run_seed():
     try:
-        # kalau admin sudah ada, jangan buat ulang
+        # kalau admin sudah ada → jangan seed ulang
         if User.query.filter_by(username="admin").first():
+            print("⚠️ Seed sudah pernah dijalankan")
             return
     except OperationalError:
+        print("⚠️ Database belum siap")
         return
 
+    # ===== ADMIN =====
     admin = User(
         username="admin",
-        password_hash=generate_password_hash("admin123"), # AKUN ADMIN
+        password_hash=generate_password_hash("admin123"),
         is_admin=True
     )
 
     db.session.add(admin)
     db.session.commit()
 
+    print("✅ Admin berhasil di-seed (admin / admin123)")
 
-def seed_films():
-    try:
-        if Film.query.first():
-            return
-    except OperationalError:
-        return
-
+    # ===== FILM =====
     films = [
         Film(
             title="Avengers: Endgame",
             genre="Action, Sci-Fi",
             duration=181,
             poster="avengers.jpg",
-            description="Avengers Endgame"
+            description="Avengers melawan Thanos."
         ),
         Film(
             title="Spider-Man: No Way Home",
             genre="Action, Adventure",
             duration=148,
             poster="spiderman.jpg",
-            description="Spider-Man No Way Home"
+            description="Spider-Man dan multiverse."
         ),
     ]
 
     db.session.add_all(films)
     db.session.commit()
 
+    # ===== SCHEDULE =====
     schedules = [
-        Schedule(
-            film_id=films[0].id,
-            show_time=datetime(2026, 2, 1, 13, 0),
-            price=40000
-        ),
-        Schedule(
-            film_id=films[1].id,
-            show_time=datetime(2026, 2, 2, 15, 0),
-            price=45000
-        ),
+        Schedule(film_id=films[0].id, show_time=datetime(2026, 2, 1, 18, 30), price=50000),
+        Schedule(film_id=films[1].id, show_time=datetime(2026, 2, 2, 20, 0), price=55000),
     ]
 
     db.session.add_all(schedules)
     db.session.commit()
 
-
-def run_seed():
-    seed_admin()
-    seed_films()
-    print("✅ SEED ADMIN + FILM + JADWAL BERHASIL")
+    print("✅ Film & jadwal berhasil di-seed")
