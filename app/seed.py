@@ -35,14 +35,28 @@ def run_seed():
             genre="Action, Sci-Fi",
             duration=181,
             poster="avengers.jpg",
-            description="Avengers melawan Thanos."
+            description="Avengers Endgame"
         ),
         Film(
             title="Spider-Man: No Way Home",
             genre="Action, Adventure",
             duration=148,
             poster="spiderman.jpg",
-            description="Spider-Man dan multiverse."
+            description="Spider-Man NWH"
+        ),
+        Film(
+            title="Doctor Strange: Multiverse of Madness",
+            genre="Action, Fantasy",
+            duration=126,
+            poster="doctor_strange.jpg",
+            description="Doctor Strange MOM"
+        ),
+        Film(
+            title="Guardians of the Galaxy Vol. 3",
+            genre="Action, Sci-Fi",
+            duration=150,
+            poster="gotg5.jpg",
+            description="GOTG Vol 3"
         ),
     ]
 
