@@ -17,9 +17,9 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(admin_bp)
 
-    # 🔹 AUTO SEED 
+    # 🔹 AUTO SEED
+    from app.seed import run_seed
     with app.app_context():
-        from app.seed import seed_data
-        seed_data()
+        run_seed()
 
     return app
