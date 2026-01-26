@@ -15,6 +15,11 @@ def create_app():
 
     app.register_blueprint(public_bp)
     app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(admin_bp)  # admin SUDAH ada prefix
+    app.register_blueprint(admin_bp)
+
+        # 🔹 JALANKAN SEED DI SINI
+    from app.seed import run_seed
+    with app.app_context():
+        run_seed()
 
     return app
