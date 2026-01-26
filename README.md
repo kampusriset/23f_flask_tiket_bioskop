@@ -22,14 +22,14 @@ Fitur utama:
 - xhtml2pdf (export tiket PDF)
 
 ---
-Akun Demo:
-Admin (Dosen)
-- Username: dosen
-- Password: 123456
+Akun :
+Admin : (bisa tanpa register sudah ke seed otomatis)
+- Username: admin
+- Password: admin123
 
-User (Mahasiswa)
-- Username: mahasiswa
-- Password: 123456
+User (wajib register)
+- Username: user
+- Password: user
   
 
 ## Cara Instalasi
