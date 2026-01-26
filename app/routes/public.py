@@ -101,19 +101,41 @@ def choose_seat(schedule_id):
 
 @bp.route("/checkout/<int:booking_id>", methods=["GET", "POST"])
 def checkout(booking_id):
+    # 🔒 HARUS LOGIN
+    if "user_id" not in session:
+        flash("Silakan login terlebih dahulu untuk checkout.", "warning")
+        return redirect(url_for("auth.login"))
+
+    # 🚫 ADMIN TIDAK BOLEH CHECKOUT
+    if session.get("is_admin"):
+        flash("Admin tidak diperbolehkan melakukan checkout.", "danger")
+        return redirect(url_for("public.home"))
+
     booking = Booking.query.get_or_404(booking_id)
+
+    # 🔐 USER HANYA BOLEH CHECKOUT BOOKING MILIK SENDIRI
+    if booking.user_id != session.get("user_id"):
+        flash("Anda tidak memiliki akses ke booking ini.", "danger")
+        return redirect(url_for("public.home"))
+
     schedule = Schedule.query.get_or_404(booking.schedule_id)
     film = Film.query.get_or_404(schedule.film_id)
 
     if request.method == "POST":
         booking.payment_method = request.form.get("payment_method")
-        booking.paid_at = None   # belum dibayar
+        booking.paid_at = None
         booking.status = "WAITING_CONFIRMATION"
 
         db.session.commit()
         return redirect(url_for("public.booking_success", booking_id=booking.id))
 
-    return render_template("checkout.html", booking=booking, schedule=schedule, film=film)
+    return render_template(
+        "checkout.html",
+        booking=booking,
+        schedule=schedule,
+        film=film
+    )
+
 
 
 @bp.route("/booking/success/<int:booking_id>")
