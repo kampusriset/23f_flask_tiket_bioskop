@@ -136,8 +136,12 @@ def booking_success(booking_id):
 
 @bp.route("/my_bookings")
 def my_bookings():
-    # sementara hardcode user_id=1 (nanti ganti ke session user login)
-    user_id = 1
+    # 🔒 WAJIB LOGIN
+    if "user_id" not in session:
+        flash("Silakan login terlebih dahulu", "warning")
+        return redirect(url_for("auth.login"))
+
+    user_id = session["user_id"]  # ✅ INI KUNCINYA
 
     bookings = (
         Booking.query
@@ -146,7 +150,6 @@ def my_bookings():
         .all()
     )
 
-    # kita siapkan data film + jadwal biar template gampang
     items = []
     for b in bookings:
         schedule = Schedule.query.get(b.schedule_id)
@@ -158,6 +161,7 @@ def my_bookings():
         })
 
     return render_template("my_bookings.html", items=items)
+
 
 @bp.route("/ticket/<int:booking_id>")
 def ticket_detail(booking_id):
