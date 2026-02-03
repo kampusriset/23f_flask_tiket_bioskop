@@ -74,12 +74,14 @@ def choose_seat(schedule_id):
         db.session.commit()
 
         return redirect(url_for("public.checkout", booking_id=booking.id))
-
+        
+        preselected_seats = []
     return render_template(
         "choose_seat.html",
         film=film,
         schedule=schedule,
         booked_seats=sorted(booked_seats),
+        preselected_seats=preselected_seats
     )
 
 
