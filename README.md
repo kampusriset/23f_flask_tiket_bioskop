@@ -1,7 +1,7 @@
-# Aplikasi Tiket Bioskop – Flask  
-Tugas UAS Pemrograman Web
+# Nama Aplikasi  
+Sistem Pembelian & Kelola Film Tiket Bioskop
 
-## Deskripsi
+## Deskripsi Aplikasi
 Aplikasi web berbasis **Flask** untuk pemesanan tiket bioskop.  
 Fitur utama:
 - Login & register user
@@ -12,14 +12,7 @@ Fitur utama:
 - Dashboard admin (kelola film, jadwal, dan booking)
 
 ---
-
-## Teknologi
-- Python 3.10+
-- Flask
-- Flask-SQLAlchemy
-- Flask-Migrate
-- SQLite
-- xhtml2pdf (export tiket PDF)
+## Flowchart Sistem
 
 ---
 ## Akun 
