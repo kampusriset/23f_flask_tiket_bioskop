@@ -13,8 +13,16 @@ Fitur utama:
 
 ---
 ## Flowchart Sistem
-
+![Flowchart Aplikasi](Flowchart.png)
 ---
+
+## Anggota Tim
+1. Satria Ridha Parama (2313010531)
+2. Sania Nur Lathifah (2313010525)
+3. Bima Surya Prayoga (2313010524)
+4. Robin Keanu Joan (2313010529)
+
+
 ## Akun 
 Admin : (bisa tanpa register sudah ke seed otomatis)
 - Username: admin
