@@ -36,26 +36,22 @@ def film_detail(film_id):
     )
 
     return render_template("film_detail.html", film=film, schedules=schedules)
+    
 @bp.route("/choose_seat/<int:schedule_id>", methods=["GET", "POST"])
 def choose_seat(schedule_id):
+    # 🔒 WAJIB LOGIN
+    if "user_id" not in session:
+        flash("Silakan login terlebih dahulu", "warning")
+        return redirect(url_for("auth.login"))
+
     schedule = Schedule.query.get_or_404(schedule_id)
     film = Film.query.get_or_404(schedule.film_id)
 
-    # seat yang sudah dibooking untuk jadwal ini
     booked_seats = set()
     for b in Booking.query.filter_by(schedule_id=schedule_id).all():
         for s in (b.seats or "").split(","):
-            s = s.strip()
-            if s:
-                booked_seats.add(s)
-
-    # ✅ repeat order: ambil kursi dari booking lama
-    repeat_id = request.args.get("repeat", type=int)
-    preselected_seats = []
-    if repeat_id:
-        old = Booking.query.get_or_404(repeat_id)
-        # boleh kamu perketat: pastikan old.user_id == current_user.id
-        preselected_seats = [x.strip() for x in (old.seats or "").split(",") if x.strip()]
+            if s.strip():
+                booked_seats.add(s.strip())
 
     if request.method == "POST":
         seats = request.form.get("seats", "").strip()
@@ -65,19 +61,10 @@ def choose_seat(schedule_id):
             flash("Kursi sudah dibooking.", "danger")
             return redirect(url_for("public.choose_seat", schedule_id=schedule_id))
 
-
         total = len(selected) * (schedule.price or 0)
 
-        # status PENDING, payment_method & paid_at kosong (sesuai kebutuhan kamu)
-        from app.models import User  # taruh import ini di atas file kalau belum ada
-
-        user = User.query.order_by(User.id.asc()).first()
-        if not user:
-            flash("Belum ada user di database. Buat user dulu.", "danger")
-            return redirect(url_for("public.home"))
-
         booking = Booking(
-            user_id=user.id,          # ✅ bukan 1 hardcode
+            user_id=session["user_id"],  # 🔥 INI FIX UTAMA
             schedule_id=schedule_id,
             seats=",".join(selected),
             total=total,
@@ -86,7 +73,6 @@ def choose_seat(schedule_id):
         db.session.add(booking)
         db.session.commit()
 
-
         return redirect(url_for("public.checkout", booking_id=booking.id))
 
     return render_template(
@@ -94,9 +80,8 @@ def choose_seat(schedule_id):
         film=film,
         schedule=schedule,
         booked_seats=sorted(booked_seats),
-        preselected_seats=preselected_seats,
-        repeat_id=repeat_id
     )
+
 
 
 @bp.route("/checkout/<int:booking_id>", methods=["GET", "POST"])
