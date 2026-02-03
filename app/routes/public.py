@@ -44,6 +44,8 @@ def choose_seat(schedule_id):
         flash("Silakan login terlebih dahulu", "warning")
         return redirect(url_for("auth.login"))
 
+    preselected_seats = []   # ✅ HARUS DI SINI
+
     schedule = Schedule.query.get_or_404(schedule_id)
     film = Film.query.get_or_404(schedule.film_id)
 
@@ -64,7 +66,7 @@ def choose_seat(schedule_id):
         total = len(selected) * (schedule.price or 0)
 
         booking = Booking(
-            user_id=session["user_id"],  # 🔥 INI FIX UTAMA
+            user_id=session["user_id"],   # ✅ USER LOGIN
             schedule_id=schedule_id,
             seats=",".join(selected),
             total=total,
@@ -74,8 +76,7 @@ def choose_seat(schedule_id):
         db.session.commit()
 
         return redirect(url_for("public.checkout", booking_id=booking.id))
-        
-        preselected_seats = []
+
     return render_template(
         "choose_seat.html",
         film=film,
@@ -83,6 +84,7 @@ def choose_seat(schedule_id):
         booked_seats=sorted(booked_seats),
         preselected_seats=preselected_seats
     )
+
 
 
 
