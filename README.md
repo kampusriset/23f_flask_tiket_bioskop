@@ -1,6 +1,8 @@
-# Nama Aplikasi  
+## Nama Aplikasi  
+FLASK TIKET BIOSKOP.
 Sistem Pembelian & Kelola Film Tiket Bioskop
 
+---
 ## Deskripsi Aplikasi
 Aplikasi web berbasis **Flask** untuk pemesanan tiket bioskop.  
 Fitur utama:
@@ -10,8 +12,8 @@ Fitur utama:
 - Pemesanan tiket
 - Download **tiket dalam bentuk PDF**
 - Dashboard admin (kelola film, jadwal, dan booking)
-
 ---
+
 ## Flowchart Sistem
 ![Flowchart Aplikasi](Flowchart.png)
 ---
@@ -21,8 +23,12 @@ Fitur utama:
 2. Sania Nur Lathifah (2313010525)
 3. Bima Surya Prayoga (2313010524)
 4. Robin Keanu Joan (2313010529)
+   
+---
+## Video Dokumentasi
+Link : https://youtu.be/NRbPBIeUEcc
 
-
+---
 ## Akun 
 Admin : (bisa tanpa register sudah ke seed otomatis)
 - Username: admin
@@ -31,7 +37,8 @@ Admin : (bisa tanpa register sudah ke seed otomatis)
 User (wajib register)
 - Username: user
 - Password: user
-  
+
+---
 
 ## Cara Instalasi
 
